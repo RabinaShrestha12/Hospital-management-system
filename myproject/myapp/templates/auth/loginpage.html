@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    {% load static %}
+    <link href="{% static 'src/styles.css' %}" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 min-h-screen flex items-center justify-center">
+    <div class="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-sm">
+        <h2 class="text-3xl font-bold text-center text-indigo-600 mb-4">Welcome Back!</h2>
+        <p class="text-center text-gray-500 mb-6">Please login to your account</p>
+        <!-- ✅ Error message display -->
+        <!-- ✅ Error message display -->
+        {% if errors %}
+            <div class="mb-4 text-red-600 text-sm text-center">
+                {% for key, message in errors.items %}
+                    <p>{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <form action="{% url 'login' %}" method="POST" class="space-y-4">
+            {% csrf_token %}
+            <div>
+                <label for="email" class="block text-gray-700">Email</label>
+                <input type="email" name="email" id="email" required
+                    class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400">
+            </div>
+
+            <div>
+                <label for="password" class="block text-gray-700">Password</label>
+                <input type="password" name="password" id="password" required
+                    class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400">
+            </div>
+
+            <div class="flex justify-between items-center text-sm">
+                <label class="flex items-center space-x-2">
+                    <input type="checkbox" class="accent-indigo-500">
+                    <span>Remember me</span>
+                </label>
+                <a href="#" class="text-indigo-500 hover:underline">Forgot password?</a>
+            </div>
+
+            <button type="submit"
+                class="w-full bg-indigo-600 text-white font-semibold py-2 rounded-lg hover:bg-indigo-700 transition duration-200">
+                Login
+            </button>
+        </form>
+
+        <p class="text-center text-gray-600 mt-6">
+            Don't have an account?
+            <a href="{% url 'register' %}" class="text-indigo-500 hover:underline">Register</a>
+        </p>
+    </div>
+</body>
+</html>
