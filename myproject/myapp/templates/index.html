@@ -1,0 +1,150 @@
+<!-- templates/home.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Hospital Management Dashboard</title>
+  {% load static %}
+  <link href="{% static 'src/styles.css' %}" rel="stylesheet">
+</head>
+<style>
+  @keyframes fade-in {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .animate-fade-in { animation: fade-in 0.8s ease-out both; }
+  .delay-100 { animation-delay: 0.1s; }
+  .delay-200 { animation-delay: 0.2s; }
+  .delay-300 { animation-delay: 0.3s; }
+</style>
+<body class="bg-gray-50 min-h-screen flex flex-col">
+
+  {% include "components/_navbar.html" %}
+
+  <!-- ✅ Hero Image -->
+<section class="mt-4">
+  <div class="w-full">
+    <img src="https://images.pexels.com/photos/1692693/pexels-photo-1692693.jpeg"
+         alt="Hospital Image"
+         class="w-full h-[500px] object-cover rounded-lg shadow-md" />
+  </div>
+
+  <!-- ✅ Hospital Name Below Image -->
+  <div class="text-center mt-4">
+    <h1 class="text-4xl font-bold text-blue-700 animate-fade-in">EKA Hospital</h1>
+    <p class="text-gray-600 mt-2">Your trusted partner in healthcare</p>
+  </div>
+</section>
+
+<!-- ✅ Optional Content Section (Remove or edit if not needed) -->
+<section class="bg-white py-16">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col-reverse lg:flex-row items-center">
+    
+    <!-- Text Content -->
+    <div class="w-full lg:w-1/2 text-center lg:text-left">
+      <h2 class="text-4xl sm:text-5xl font-extrabold text-gray-900 leading-tight mb-6">
+        Discover Quality Medical Services
+      </h2>
+      <p class="text-lg text-gray-600 mb-8">
+        We provide exceptional healthcare with expert doctors and state-of-the-art facilities.
+      </p>
+
+      <div class="flex flex-col sm:flex-row sm:justify-center lg:justify-start gap-4">
+        <a href="#departments" class="bg-blue-600 text-white px-6 py-3 rounded-lg text-sm font-medium hover:bg-blue-700 transition">
+          Our Departments
+        </a>
+        <a href="#appointment" class="border border-blue-600 text-blue-600 px-6 py-3 rounded-lg text-sm font-medium hover:bg-blue-50 transition">
+          Book Appointment
+        </a>
+      </div>
+    </div>
+
+    <!-- Image / Illustration -->
+    <div class="w-full lg:w-1/2 mb-10 lg:mb-0 flex justify-center">
+      <img src="https://images.unsplash.com/photo-1588776814546-ec7a19f6aa2a"
+           alt="Doctor Team"
+           class="w-full max-w-md rounded-xl shadow-md">
+    </div>
+  </div>
+
+  <!-- Dashboard Hero -->
+  <section class="py-12 px-4 bg-white shadow">
+    <div class="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-8">
+      <div class="lg:w-1/2">
+        <h1 class="text-4xl font-bold text-gray-900 mb-4">
+          Welcome to Hospital Management
+        </h1>
+        <p class="text-gray-600 mb-6">
+          Manage Patients, Doctors, Appointments & Departments seamlessly.
+        </p>
+        <div class="flex flex-wrap gap-4">
+          <a href="" class="bg-indigo-600 text-white px-5 py-3 rounded-lg hover:bg-indigo-700">View Patients</a>
+          <a href="" class="border border-indigo-600 text-indigo-600 px-5 py-3 rounded-lg hover:bg-indigo-50">View Doctors</a>
+        </div>
+      </div>
+      <div class="lg:w-1/2">
+        <img src="{% static 'images/hospital_dashboard.svg' %}" alt="Hospital Dashboard" class="w-full max-w-md mx-auto">
+      </div>
+    </div>
+  </section>
+
+  <!-- Sections: Patients, Doctors, Appointments -->
+  <section class="mt-12 px-4 flex-grow">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+      <!-- Patients Card -->
+      <div class="bg-white rounded-lg shadow hover:shadow-lg transition transform hover:-translate-y-1 animate-fade-in delay-100">
+        <div class="p-6">
+          <h2 class="text-xl font-semibold text-gray-800">Patients</h2>
+          <p class="text-gray-600 mt-2">Manage patient records, admissions, and history.</p>
+          <div class="mt-4 flex justify-between items-center">
+            <span class="font-bold text-indigo-600">{{ patients_count }}</span>
+            <a href="" class="text-indigo-600 hover:underline">View All</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Doctors Card -->
+      <div class="bg-white rounded-lg shadow hover:shadow-lg transition transform hover:-translate-y-1 animate-fade-in delay-200">
+        <div class="p-6">
+          <h2 class="text-xl font-semibold text-gray-800">Doctors</h2>
+          <p class="text-gray-600 mt-2">Manage doctor profiles & specializations.</p>
+          <div class="mt-4 flex justify-between items-center">
+            <span class="font-bold text-indigo-600">{{ doctors_count }}</span>
+            <a href="" class="text-indigo-600 hover:underline">View All</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Appointments Card -->
+      <div class="bg-white rounded-lg shadow hover:shadow-lg transition transform hover:-translate-y-1 animate-fade-in delay-300">
+        <div class="p-6">
+          <h2 class="text-xl font-semibold text-gray-800">Appointments</h2>
+          <p class="text-gray-600 mt-2">Track upcoming & past appointments.</p>
+          <div class="mt-4 flex justify-between items-center">
+            <span class="font-bold text-indigo-600">{{ appointments_count }}</span>
+            <a href="{% url 'appoinment' %}" class="text-indigo-600 hover:underline">View All</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Departments Card -->
+      <div class="bg-white rounded-lg shadow hover:shadow-lg transition transform hover:-translate-y-1 animate-fade-in">
+        <div class="p-6">
+          <h2 class="text-xl font-semibold text-gray-800">Departments</h2>
+          <p class="text-gray-600 mt-2">Overview of hospital departments.</p>
+          <div class="mt-4 flex justify-between items-center">
+            <span class="font-bold text-indigo-600">{{ departments_count }}</span>
+            <a href="" class="text-indigo-600 hover:underline">View All</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Add More Cards if needed -->
+
+    </div>
+  </section>
+
+  {% comment %} {% include "components/footer.html" %} {% endcomment %}
+</body>
+</html>
