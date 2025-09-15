@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Appointment</title>
+    {% load static %}
+    <link href="{% static 'src/styles.css' %}" rel="stylesheet" />
+</head>
+<body>
+    {% include "components/_navbar.html" %}
+
+    <!-- Edit Appointment Page -->
+    <section class="min-h-screen bg-gray-100 flex items-center justify-center px-4 sm:px-6 lg:px-8 py-12">
+        <div class="max-w-3xl w-full bg-white p-8 rounded-xl shadow-md">
+            
+            <!-- Heading -->
+            <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Update Appointment</h2>
+
+            <!-- Appointment Form -->
+            <form action="{% url 'appoinment' appointment.id %}" method="POST" enctype="multipart/form-data" class="space-y-5">
+                {% csrf_token %}
+                {% if message %}
+                    <span class="text-green-500">{{ message }}</span>
+                {% endif %}
+
+                <!-- Fullname -->
+                <div>
+                    <label for="fullname" class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                    <input type="text" id="fullname" name="fullname" value="{{ appointment.fullname }}"
+                        class="w-full border border-gray-300 px-4 py-2 rounded-md focus:ring-2 focus:ring-indigo-500 focus:outline-none" />
+                    <span class="text-red-500">{{ errors.fullname }}</span>
+                </div>
+
+                <!-- Phone Number -->
+                <div>
+                    <label for="phone_number" class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+                    <input type="number" id="phone_number" name="phone_number" value="{{ appointment.phone_number }}"
+                        class="w-full border border-gray-300 px-4 py-2 rounded-md focus:ring-2 focus:ring-indigo-500 focus:outline-none" />
+                    <span class="text-red-500">{{ errors.phone_number }}</span>
+                </div>
+
+                <!-- Category -->
+                <div>
+                    <label for="category" class="block text-sm font-medium text-gray-700 mb-1">Category</label>
+                    <input type="text" id="category" name="category" value="{{ appointment.category }}"
+                        class="w-full border border-gray-300 px-4 py-2 rounded-md focus:ring-2 focus:ring-indigo-500 focus:outline-none" />
+                    <span class="text-red-500">{{ errors.category }}</span>
+                </div>
+
+                <!-- Date -->
+                <div>
+                    <label for="date" class="block text-sm font-medium text-gray-700 mb-1">Date</label>
+                    <input type="date" id="date" name="date" value="{{ appointment.date|date:'Y-m-d' }}"
+                        class="w-full border border-gray-300 px-4 py-2 rounded-md focus:ring-2 focus:ring-indigo-500 focus:outline-none" />
+                    <span class="text-red-500">{{ errors.date }}</span>
+                </div>
+
+                <!-- Time -->
+                <div>
+                    <label for="time" class="block text-sm font-medium text-gray-700 mb-1">Time</label>
+                    <input type="time" id="time" name="time" value="{{ appointment.time|time:'H:i' }}"
+                        class="w-full border border-gray-300 px-4 py-2 rounded-md focus:ring-2 focus:ring-indigo-500 focus:outline-none" />
+                    <span class="text-red-500">{{ errors.time }}</span>
+                </div>
+
+                <!-- Select Doctor -->
+                <div>
+                    <label for="doctor_id" class="block text-sm font-medium text-gray-700 mb-1">Doctor</label>
+                    <select id="doctor_id" name="doctor_id"
+                        class="w-full border border-gray-300 px-4 py-2 rounded-md focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                        <option value="{{ appointment.doctors.id }}">{{ appointment.doctors.fullname }}</option>
+                        {% for doctor in doctors %}
+                            <option value="{{ doctor.id }}">{{ doctor.fullname }}</option>
+                        {% endfor %}
+                    </select>
+                    <span class="text-red-500">{{ errors.doctor_id }}</span>
+                </div>
+
+                <!-- Description -->
+                <div>
+                    <label for="description" class="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                    <textarea id="description" name="description" rows="5"
+                        class="w-full border border-gray-300 px-4 py-2 rounded-md focus:ring-2 focus:ring-indigo-500 focus:outline-none resize-none">{{ appointment.description }}</textarea>
+                    <span class="text-red-500">{{ errors.description }}</span>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="pt-2">
+                    <button type="submit"
+                        class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2.5 rounded-md transition">
+                        Update Appointment
+                    </button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+</body>
+</html>
