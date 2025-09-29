@@ -1,0 +1,82 @@
+<html>
+<head>
+    <title>Home Page</title>
+    {% load static %}
+<link  href ="{% static 'src/styles.css' %}" rel="stylesheet" />
+</head>
+
+<body>
+    {% include "components/_navbar.html" %}
+<!-- Add Blog Page -->
+<section class="min-h-screen bg-gray-100 flex items-center justify-center px-4 sm:px-6 lg:px-8 py-12">
+  <div class="max-w-3xl w-full bg-white p-8 rounded-xl shadow-md">
+    
+    <!-- Heading -->
+    <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Update your Blog</h2>
+
+    <!-- Blog Form -->
+    <form action="{% url "editdoctor" blog.id %}" method="POST" enctype="multipart/form-data" class="space-y-5">
+      {% csrf_token %}
+      {% if message %}
+        <space class = 'text-green-400'> {{message}} </span>
+      {% endif %}
+      <!-- Title -->
+      <div>
+        <label for="fullname" class="block text-sm font-medium text-gray-700 mb-1">Title</label>
+        <input type="text" id="fullname" name="fullname"  value="{{blog.fullname}}"
+          class="w-full border border-gray-300 px-4 py-2 rounded-md focus:ring-2 focus:ring-indigo-500 focus:outline-none" />
+          <span class = "text-red-500">{{error.fullname}}</span>
+      </div>
+
+      <!-- Category -->
+      <div>
+        <label for="category" class="block text-sm font-medium text-gray-700 mb-1">Category</label>
+        <select id="category" name="category"
+          class="w-full border border-gray-300 px-4 py-2 rounded-md focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+          <option value="{{blog.category}}">{{blog.category}}</option>
+          <option value="technology">Technology</option>
+          <option value="lifestyle">Lifestyle</option>
+          <option value="travel">Travel</option>
+          <option value="coding">Coding</option>
+        </select>
+        <span class = "text-red-500">{{error.category}}</span>
+      </div>
+
+
+      <!-- Image Upload -->
+      <div>
+        <label for="image" class="block text-sm font-medium text-gray-700 mb-1">previous image</label>
+        {% if blog.image %}
+        <img class = "w-[300] h -auto mb-4" src="{{blog.image.url}}"/>
+        {% else%}
+         <span class = "w-[300] h -auto mb-6" src=""> No image upload yet </span>
+         {% endif %}
+
+        <label for="image" class="block text-sm font-medium text-gray-700 mb-1">Upload Image</label>
+        <input type="file" id="image" name="image" accept="image/*"
+          class="w-full border border-gray-300 px-3 py-2 rounded-md bg-white file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-indigo-600 file:text-white hover:file:bg-indigo-700 transition" />
+          <span class = "text-red-500">{{error.image}}</span>
+        </div>
+
+      <!-- Description -->
+      <div>
+        <label for="description" class="block text-sm font-medium text-gray-700 mb-1">Description</label>
+        <textarea id="description" name="description" rows="5"  value="{{blog.description}}"
+          class="w-full border border-gray-300 px-4 py-2 rounded-md focus:ring-2 focus:ring-indigo-500 focus:outline-none resize-none">{{blog.description}}</textarea>
+          <span class = "text-red-500">{{error.description}}</span>
+      </div>
+
+      <!-- Submit Button -->
+      <div class="pt-2">
+        <button type="submit"
+          class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2.5 rounded-md transition">
+          Publish Blog
+        </button>
+      </div>
+    </form>
+  </div>
+</section>
+
+</body>
+</html>
+
